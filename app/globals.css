@@ -2,10 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -15,7 +12,301 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #D9D9D9 !important;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+  text-decoration: none !important; /* bootstrap forcing me to say no */
+  border: none;
+}
+/* General */
+
+
+/* Header */
+header{
+  background-color: #1F1A24;
+  height: 8vh;
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+header p, header a{
+  color: #f2f2f2;
+  font-size: 20px;
+}
+
+header a:hover{
+  color: #00B7FF;
+  border-bottom: #FFFFFF 1px solid;
+
+}
+/* Left side of header */
+.mainbtns{
+  display: flex;
+  height: 8vh;
+  flex-direction: row;
+  align-items: start;
+}
+.mainbtns > ol{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+justify-content: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  height: 100%;
+}
+.mainbtns > ol > li{
+  margin: 10% 10%;
+  list-style-type: none;
+  
+}
+
+header > .mainbtns > .logo{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 5%;
+  margin-top: 1vh;
+  height: 80%;
+}
+
+/* Right side of header (discord login btn only) */
+header > .login{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  margin-right: 5%;
+  
+}
+
+
+/* Trade display page */
+
+
+.trade-section{
+  display: flex;
+  flex-direction: row;
+  align-items:flex-start;
+}
+
+
+/* Trade Side */
+
+.tradeHeader{
+  background-color: #1F1A24;
+
+  color: #FFFFFF;
+  margin: 0;
+  padding-left: 1%;
+}
+.tradesDiv{
+  display: flex;
+  flex-direction: column;
+  margin: 5%;
+  margin-top: 0;
+  background-color: #FFFFFF;
+  min-height: 50vh;
+}
+
+.individualTradeOutterDiv{
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  margin: 1%;
+
+  border: 3px solid black;
+  border-radius: 10px;
+  padding-bottom: 1%;
+}
+
+.individualTradeBottomDiv > p{
+  margin-bottom: 0;
+}
+
+.individualTradeDiv{
+  display:flex;
+  flex-direction: row;
+  
+  align-items: center;
+  justify-content: center;
+
+}
+.tradesDiv:nth-child(odd){
+  background-color: #f2f2f2;
+
+}
+
+.individualTradeDiv button{
+  margin-left: auto;
+}
+
+/* Trade Display - Formatting*/
+
+
+/* Trade Display - Filter Side*/
+.tradesFilterDiv{
+  width: 30%;
+  padding-left: 10%;
+}
+.tradesDiv{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+.tradeFilterHeader{
+  background-color: #1F1A24;
+  text-align: center;
+  color: #FFFFFF;
+  margin: 0;
+}
+.tradeFilterContent{
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+}
+.tradeFilterContent > div{
+  display: flex;
+  flex-direction: row;
+  
+  align-items: center;
+  margin: 10px;
+}
+
+.tradeFilterContent > div > img{
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  
+}
+.tradeFilterContent > div > p{
+  margin: 0;
+  font-size: 20px;
+  justify-self: center;
+}
+.tradeFilterContent > div > input{
+  margin-left: auto;
+  justify-self: center;
+}
+
+.tradeFilterBtn{
+  text-align: center;
+  color: #FFFFFF;
+  background-color: #1F1A24;
+  margin: 10px;
+
+  border: none;
+}
+
+.tradeFilterBigBtn{
+  text-align: center;
+  color: #FFFFFF;
+  background-color: #1F1A24;
+  margin: 10px;
+  font-size: 30px;
+  font: bold;
+  border: none;
+}
+
+
+/* Trade create form*/
+
+.input-grouping{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  border: 3px solid black;
+  border-radius: 10px;
+
+}
+.input-grouping > i{
+  margin: 10px;
+  font-size: 30px;
+
+}
+
+/* Displaying all the items */
+.itemsPageDiv, .itemsPageForm{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  flex-direction: row;
+}
+
+.itemPageObject{
+  width:10%;
+  display: flex;
+  flex-direction: column;
+  margin: 1%;
+  outline: 5px solid black;
+  border-radius: 10px;
+
+
+  align-items: center;
+}
+.itemPageObject img{
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+}
+.itemPageObject p{
+  text-align: center;
+  font-size: 15px;
+}
+.itemPageObject a{
+  text-decoration: none;
+  color: black;
+}
+
+.trade-add-btn{
+  border: 3px solid black;
+  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+}
+
+
+.CreateTradeForm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  
+  border-radius: 10px;
+}
+
+#input-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+
+.input-group > div > label{
+  margin: 10px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 130px;
+  width: 130px;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid black;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+#input-group > div > label > p{
+  margin-bottom: 0;
+}
+
+.traderPfpDisplay{
+  border-radius: 100%;
+  height: 4em;
+  margin-top: 0vh;
 }
