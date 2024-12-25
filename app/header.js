@@ -20,6 +20,16 @@ export default function Header() {
 
         
     </nav>
+    <div>
+        <form className="flex items-center space-x-2 color-black">
+            <select className="rounded-lg p-2">
+                <option value="user">User</option>
+                <option value="trade">Trades</option>
+            </select>
+            <input className="rounded-lg p-2" type="text" placeholder="Search" />
+            <button className="bg-1F1A24 text-white rounded-lg p-2">Search</button>
+        </form>
+    </div>
 
     {/* Login Section */}
     <div className="login ml-auto">
