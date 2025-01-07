@@ -23,6 +23,21 @@ import { Children } from "react";
 
 //import Footer from "./footer" 
 
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Header />
+        {children}
+      </body>
+    </html>
+  );
+}
+
+/*
 export default function RootLayout({ children, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
@@ -39,3 +54,4 @@ export default function RootLayout({ children, pageProps: { session, ...pageProp
     </SessionProvider>
   );
 }
+*/

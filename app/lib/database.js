@@ -1,4 +1,5 @@
 // lib/dbConnect.js
+'use server';
 import mongoose from 'mongoose';
 
 const MONGO_URI = process.env.MONGO_DB_STRING;

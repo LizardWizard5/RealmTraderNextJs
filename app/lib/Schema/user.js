@@ -1,8 +1,10 @@
-let mongoose = require('mongoose')
+import mongoose from 'mongoose';
 
-const plm = require('passport-local-mongoose')
+//const plm = require('passport-local-mongoose')
 //The only way to login is through discord
-let Schema =  mongoose.Schema({
+
+
+let UserSchema = new mongoose.Schema({
     Email:{
         type: String,
         required: true
@@ -43,9 +45,16 @@ let Schema =  mongoose.Schema({
         type: Boolean,
         required: true
     },
-    
+    status:{//Admin, User, Banned
+        type: String,
+        required: true,
+        default: "user"
+    },
+    bannedUntil:{
+        type: Date,
+        required: false
+    },
 })
 
-Schema.plugin(plm)
-const User = mongoose.model('users', Schema)
-module.exports = User
+//Schema.plugin(plm)
+export default mongoose.models.users || mongoose.model('users', UserSchema)
