@@ -1,6 +1,7 @@
 let mongoose = require('mongoose')
-let Schema =  mongoose.Schema
-let ItemSchema = new Schema({
+
+
+const ItemSchema = new mongoose.Schema({
     name:{//Name of the item e.g "Greater Potion of Attack", "Potion of Attack"
         type: String,
         required: true

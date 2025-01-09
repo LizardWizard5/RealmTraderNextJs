@@ -12,6 +12,8 @@ export default function ClientTradeList({ trade }) {
         console.log(data.itemId);
         console.log(data.get("itemId"));
 
+        
+
         // Example API call: await fetch(`/api/deleteItem`, { method: 'POST', body: data });
     };
     console.log("Trade in cleintTradeList");
