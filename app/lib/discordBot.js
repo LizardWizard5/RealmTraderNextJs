@@ -1,5 +1,5 @@
 'use server';
-let Discord = require('discord.js') 
+import Discord from 'discord.js';
 import {getTradeById} from './databaseCalls';
 const client = new Discord.Client({ intents: [Discord.GatewayIntentBits.DirectMessages] });
 const token =  process.env.BOT_TOKEN;
