@@ -32,17 +32,12 @@ export default function AddItemComponent({ items, state }) {
 
         const inputs = document.getElementById("tradeForm").getElementsByTagName("input");
         
-        console.log("Item id: " + item._id);
         //Check if item already exists in tradeItems
         for (let i = 0; i < inputs.length; i++) {
             if(inputs[i].name === "tradeItems"){
                 let currentInput = JSON.parse(inputs[i].value);
-                console.log("Found input with same name");
-                console.log("CurrentInputId: "+currentInput.id);
-                console.log("Item id: "+item._id);
                 if (currentInput.id == item._id){
-                    console.log("Something was found with the same id");
-                    inputs[i].value = JSON.stringify({id:item._id, amount:currentInput.amount+1, imageUrl:item.imageUrl, selling:state === "selling"});
+                    inputs[i].value = JSON.stringify({id:item._id, amount:currentInput.amount+1, imageUrl:item.imageUrl, tags:item.tags, selling:state === "selling"});
                     let p = document.getElementById(item._id+"-"+state);
                     p.innerHTML = currentInput.amount+1;
                     return;
@@ -72,7 +67,7 @@ export default function AddItemComponent({ items, state }) {
          input.name = "tradeItems";
          input.type = "hidden";
          input.id = item._id+state;
-         input.value = JSON.stringify({id:item._id, amount:1, imageUrl:item.imageUrl, selling:state === "selling"});
+         input.value = JSON.stringify({id:item._id, amount:1, imageUrl:item.imageUrl,tags:item.tags, selling:state === "selling"});
          tradeForm.appendChild(input);
 
         

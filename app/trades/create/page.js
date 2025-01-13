@@ -39,7 +39,7 @@ export default async function Page() {
       </div>
       {/* Form Section */}
       <div className="flex flex-row justify-center mt-8">
-        <form id="tradeForm" className="">
+        <form id="tradeForm" className="" action={`/api/trades`} method="POST">
           <input
             type="submit"
             className="bg-gray-800 text-white px-4 py-2 rounded-md shadow hover:bg-gray-700 transition"

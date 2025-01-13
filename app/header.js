@@ -33,7 +33,7 @@ export default function Header() {
 
     {/* Login Section */}
     <div className="login ml-auto">
-    <a className=" hover:border-b-3 hover:border-white flex items-center space-x-1" href="/login">
+    <a className=" hover:border-b-3 hover:border-white flex items-center space-x-1" href="https://discord.com/oauth2/authorize?client_id=1214717965442883675&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fdiscord&scope=identify+email">
         <img src="/discord-brands-solid.svg" alt="Login Icon" className="w-5 h-5" />
         <span>Login</span>
     </a>
