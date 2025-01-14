@@ -5,7 +5,7 @@ import React from 'react';
 
 export default function Header() {
     return (
-<header className="flex flex-wrap items-center pl-5 pt-2 bg-1F1A24 text-white ">
+<header className="flex flex-wrap items-center pl-5 pt-2 bg-1F1A24 text-white h-auto pb-2">
     {/* Logo Section */}
     <div className="flex-shrink-0 text-white">
         <img className="h-12 w-12 md:h-20 md:w-20" src="/RealmTrader.png" alt="logo" />
