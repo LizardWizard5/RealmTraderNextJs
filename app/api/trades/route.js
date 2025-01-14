@@ -7,14 +7,12 @@ export async function GET(request) {
     return new Response(JSON.stringify(trades), {
         headers: { "Content-Type": "application/json" },
     });
-    
 }
 
 
 export async function POST(request) {
     // Parse the form data from the request
     const formData = await request.formData();  
-    //console.log(formData);
     let selling = [];
     let buying = [];
 
@@ -24,7 +22,6 @@ export async function POST(request) {
     
 
     for (let i=0; i<tradeItems.length; i++){
-        console.log(tradeItems[i]);
         let item = JSON.parse(tradeItems[i]);
         if (item.selling){
             sellingTags.push.apply(sellingTags, item.tags);
@@ -36,6 +33,10 @@ export async function POST(request) {
         }
     }   
 
+    if(selling.length === 0 || buying.length === 0){
+        return new Response(JSON.stringify({status:"400", message: "Trade must have at least one item in each section" }));
+    }
+    
     let finalTrade = {
         trader:"Unknown NEXTJS User",
         time: new Date(8.64e15).toString(),
@@ -45,10 +46,8 @@ export async function POST(request) {
         sellingTags:[... new Set(sellingTags)],
         uid: createRandomString(5),
     }
-    createTrade(finalTrade);
+    await createTrade(finalTrade);
 
-    return new Response(JSON.stringify({ message: "Trade Created", req: request }), {
-        headers: { "Content-Type": "application/json" },
-    });
+    return new Response(JSON.stringify({status:"200", message: "Trade Created" }));
     
 }

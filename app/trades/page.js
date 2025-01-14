@@ -10,15 +10,6 @@ import ClientFilterUI from "./ClientFilterUI";
 
 export default async function Trades() {
 
-    async function handleTradeRequest(tradeId) {
-        // API call to delete an item
-        "use server";
-
-        console.log("In the handleTradeRequest function");
-        console.log(tradeId);
-        //const trade = await getTradeById(tradeId);
-        //sendTradeAlert(trade);
-    }
 
     const trades = await getTrades();
 
@@ -47,7 +38,7 @@ export default async function Trades() {
                                     {trade.trading.map((item) => (
                                         <div key={item._id} className='flex items-center mr-4 mb-2'>
                                             <img className='w-10 h-10 mr-2' src={"items/" + item.imageUrl + ".png"} alt={item.name} />
-                                            <p className='text-sm font-medium'>x{2}</p>
+                                            <p className='text-sm font-medium'>x{item.amount}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -56,7 +47,7 @@ export default async function Trades() {
                                     {trade.tradingFor.map((item) => (
                                         <div key={item._id} className='flex items-center mr-4 mb-2'>
                                             <img className='w-10 h-10 mr-2' src={"items/" + item.imageUrl + ".png"} alt={item.name} />
-                                            <p className='text-sm font-medium'>x{2}</p>
+                                            <p className='text-sm font-medium'>x{item.amount}</p>
                                         </div>
                                     ))}
                                 </div>

@@ -1,9 +1,14 @@
+"use server";
+
 import React from "react";
 import AddItemComponent from "./component";
 import { getItems } from "@/app/lib/databaseCalls";
-
+import Form from "./createForm";
 
 export default async function Page() {
+
+  
+
   let items = await getItems();
   const states = ["selling", "buying"];
   return (
@@ -39,13 +44,7 @@ export default async function Page() {
       </div>
       {/* Form Section */}
       <div className="flex flex-row justify-center mt-8">
-        <form id="tradeForm" className="" action={`/api/trades`} method="POST">
-          <input
-            type="submit"
-            className="bg-gray-800 text-white px-4 py-2 rounded-md shadow hover:bg-gray-700 transition"
-            value="Submit"
-          />
-        </form>
+        <Form />
       </div>
     </div>
 
