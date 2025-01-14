@@ -16,10 +16,10 @@ const TradeSchema = new mongoose.Schema({
         default: "Unknown",
     },
     trading: { // Selling items
-        type: [ItemSchema.schema], // Using the schema from ItemSchema
+        type: [], // Using the schema from ItemSchema
     },
     tradingFor: { // Buying items
-        type: [ItemSchema.schema],
+        type: [],
     },
     sellingTags: {
         type: [String],

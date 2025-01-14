@@ -1,8 +1,9 @@
 
 import React from "react";
 import { getTrades } from "../lib/databaseCalls";
-import { sendTradeAlert } from "../lib/discordBot";
 
+
+import RequestTrade from "./RequestTrade";
 import ClientTradeList from "./ClientTradeList";
 import ClientFilterUI from "./ClientFilterUI";
 
@@ -11,6 +12,7 @@ export default async function Trades() {
 
     async function handleTradeRequest(tradeId) {
         // API call to delete an item
+        "use server";
 
         console.log("In the handleTradeRequest function");
         console.log(tradeId);
@@ -37,7 +39,7 @@ export default async function Trades() {
             </div>
             <div className="w-3/5 mt-5" key="tradeCards">
                 {trades.map((trade) => (
-                    <div>
+                    <div key={trade._id}>
                         <div className='bg-white shadow-md rounded-lg p-6 mb-4' key={trade._id}>
                             <h1 className='text-xl font-bold mb-2'>Trader: {trade.trader}</h1>
                             <div className='flex flex-row items-center mb-4'>
@@ -58,10 +60,11 @@ export default async function Trades() {
                                         </div>
                                     ))}
                                 </div>
-                                <div className='ml-auto'>
-                                    <button className='bg-header hover:bg-gray-700 text-white font-bold py-2 px-4 rounded'>Request Trade</button>
+                                <div className='ml-auto' >
+                                    <RequestTrade tradeId={trade._id} />
 
                                 </div>
+
                             </div>
                             <p className='text-gray-500 text-sm'>{trade.uid} - {trade.time}</p>
                         </div>

@@ -1,5 +1,6 @@
 
-import { getTrades, getItems } from "@/app/lib/databaseCalls";
+import { getTrades, createTrade } from "@/app/lib/databaseCalls";
+import { createRandomString } from "@/app/lib/useful";
 
 export async function GET(request) {
     const trades = await getTrades();
@@ -9,10 +10,8 @@ export async function GET(request) {
     
 }
 
+
 export async function POST(request) {
-
-    
-
     // Parse the form data from the request
     const formData = await request.formData();  
     //console.log(formData);
@@ -23,38 +22,30 @@ export async function POST(request) {
     let sellingTags = [];
     let buyingTags = [];
     
-    
 
     for (let i=0; i<tradeItems.length; i++){
         console.log(tradeItems[i]);
         let item = JSON.parse(tradeItems[i]);
         if (item.selling){
-            sellingTags.concat(item.tags);
+            sellingTags.push.apply(sellingTags, item.tags);
             selling.push(item);
         }
         else {
-            buyingTags.concat(item.tags);
+            buyingTags.push.apply(buyingTags, item.tags);
             buying.push(item);
         }
     }   
 
     let finalTrade = {
-        trader:"Unknown",
-        time: new Date(),
+        trader:"Unknown NEXTJS User",
+        time: new Date(8.64e15).toString(),
         trading: selling,
         tradingFor: buying,
         sellingTags: new Set(sellingTags),
-        buyingTags: new Set(buyingTags)
+        buyingTags: new Set(buyingTags),
+        uid: createRandomString(5),
     }
-
-    console.log("Selling Tags");
-    console.log(sellingTags);
-    console.log("Buying Tags");
-    console.log(buyingTags);
-
-    console.log("Final Trade");
-
-    console.log(finalTrade);
+    createTrade(finalTrade);
 
     return new Response(JSON.stringify({ message: "Trade Created", req: request }), {
         headers: { "Content-Type": "application/json" },
