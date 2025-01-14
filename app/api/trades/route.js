@@ -41,8 +41,8 @@ export async function POST(request) {
         time: new Date(8.64e15).toString(),
         trading: selling,
         tradingFor: buying,
-        sellingTags: new Set(sellingTags),
-        buyingTags: new Set(buyingTags),
+        buyingTags: [...new Set(buyingTags)],
+        sellingTags:[... new Set(sellingTags)],
         uid: createRandomString(5),
     }
     createTrade(finalTrade);

@@ -24,7 +24,8 @@ export async function getTrades() {
  */
 export async function getTradeById(id) {
     await dbConnect();
-    const trade = await Trade.findOne(id);
+    id = id.toString();
+    const trade = await Trade.findOne({id});
     return trade;
 }
 

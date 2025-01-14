@@ -3,7 +3,7 @@ import { sendTradeAlert } from "@/app/lib/discordBot";
 export async function POST(request) {
     const body = await request.json();
     console.log(body);
-
+    await sendTradeAlert(body.tradeId.tradeId);
     return new Response(JSON.stringify({ message: "Trade Alert Sent" }), {
         headers: { "Content-Type": "application/json" },
     });

@@ -1,6 +1,10 @@
 "use client";
+import React, { useState } from 'react';
+import { set } from "mongoose";
 
 export default function RequestTrade(tradeId) {
+    const [buttonText, setButtonText] = useState('Request Trade');
+    const [isDisabled, setIsDisabled] = useState(false);
 
     async function handleTradeRequest() {
         //API call to send trade request
@@ -16,9 +20,12 @@ export default function RequestTrade(tradeId) {
 
         });
 
+        setButtonText('Request Sent');
+        setIsDisabled(true);
+
     }
 
     return (
-        <button className='bg-header ho ver:bg-gray-700 text-white font-bold py-2 px-4 rounded' onClick={ handleTradeRequest} >Request Trade</button>
+        <button className='bg-header ho ver:bg-gray-700 text-white font-bold py-2 px-4 rounded'  disabled={isDisabled} onClick={ handleTradeRequest} >{buttonText}</button>
     )
 }
