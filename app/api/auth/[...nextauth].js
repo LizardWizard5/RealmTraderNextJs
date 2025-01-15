@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 
 import DiscordProvider from "next-auth/providers/discord";
 
-export const authOptions = {
+const authOptions = NextAuth( {
   // Configure one or more authentication providers
   providers: [
     DiscordProvider({
@@ -11,6 +11,14 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
-}
+  callbacks: {
+    async session(session, token) {
+      // Customize the session object here if needed
+      session.user.id = token.sub;
+      return session;
+    },
+  },
 
-export default NextAuth(authOptions)
+})
+
+export {authOptions as GET, authOptions as POST}

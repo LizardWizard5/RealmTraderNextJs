@@ -1,5 +1,6 @@
 "use client";
 import { set } from "mongoose";
+import { redirect } from "next/dist/server/api-utils";
 import React, {useState} from "react";
 export default function Form() {
 
@@ -7,8 +8,7 @@ export default function Form() {
     let [buttonDisabled, setButtonDisabled] = useState(false);
 
     async function createTrade(formData) {
-        setButtonValue("Creating Trade...");
-        setButtonDisabled(true);
+        setButtonValue("Creating Trade...");//Just incase server takes a while to respond
 
         const res = await fetch("http://localhost:3000/api/trades", {
             method: "POST",
@@ -16,8 +16,15 @@ export default function Form() {
         });
 
         const resJson = await res.json();
-        console.log(resJson);
+        
         setButtonValue(resJson.message);
+        if(resJson.status === "200"){
+            setButtonDisabled(true);
+            setTimeout(() => {
+                window.location.href = "/trades";
+            }, 1000);
+        }
+       // res.redirect("/trades");
          
 
 
