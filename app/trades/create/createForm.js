@@ -2,12 +2,21 @@
 import { set } from "mongoose";
 import { redirect } from "next/dist/server/api-utils";
 import React, {useState} from "react";
+
+import { useSession } from "next-auth/react";
+
 export default function Form() {
+    //Get session
+    const { data: session, status } = useSession();
 
     let [buttonValue, setButtonValue] = useState("Submit");
     let [buttonDisabled, setButtonDisabled] = useState(false);
 
     async function createTrade(formData) {
+        if(!session){
+            window.location.href = "/api/auth/signin";
+            return;
+        }
         setButtonValue("Creating Trade...");//Just incase server takes a while to respond
 
         const res = await fetch("http://localhost:3000/api/trades", {

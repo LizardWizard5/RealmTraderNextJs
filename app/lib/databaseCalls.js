@@ -36,7 +36,7 @@ export async function getTradeById(id) {
  */
 export async function getUser(discordId) {
     await dbConnect();
-    const user = await User.findOne({ discordId });
+    const user = await User.findOne({ discordId});
     return user;
 }
 
