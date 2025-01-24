@@ -9,9 +9,13 @@ export default function ClientFilterUI() {
     return (
 
         <div className="text-center mb-6 flex flex-col" >
-            <a href="/trades/create" className='bg-header hover:bg-gray-700 text-white font-bold py-2 px-4  w-full mb-2'>
-                Create Trade
-            </a>
+            {
+
+                session && <a href="/trades/create" className='bg-header hover:bg-gray-700 text-white font-bold py-2 px-4  w-full mb-2'>Create Trade</a>
+
+            }
+
+
             <div>
                 <div className="flex flex-col bg-white w-100">
                     <div className="bg-header">

@@ -5,11 +5,11 @@ import mongoose from 'mongoose';
 
 
 let UserSchema = new mongoose.Schema({
-    Email:{
+    email:{
         type: String,
         required: true
     },
-    Username:{
+    username:{
         type: String,
         required: true
     },
@@ -17,19 +17,7 @@ let UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Token:{
-        type: String,
-        required: true
-    },
-    RefreshToken:{
-        type: String,
-        required: true
-    },
     ProfilePicture:{
-        type:String,
-        required: false
-    },
-    Pfp:{
         type:String,
         required: false
     },

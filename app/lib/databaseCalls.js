@@ -5,7 +5,7 @@ import dbConnect from './database';
 import Trade from './Schema/trade';
 import User from './Schema/user';
 import Item from './Schema/item';
-
+import accountRating from './Schema/accountRating';
 /**
  * 
  * @returns Array of Trades
@@ -62,6 +62,15 @@ export async function createTrade(trade) {
 
 export async function createUser(user) {
     await dbConnect();
-    await User.create(user)
+    //Create a new user
+    const newAccount = await User.create(user)
+
+    let accountRate ={
+        accountId:newAccount.id,
+        upvotes:0,
+        downvotes:0,
+    }
+    //Now create a new account rating for the user
+    await accountRating.create(accountRate);
 }
 
