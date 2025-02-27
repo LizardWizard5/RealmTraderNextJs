@@ -10,17 +10,15 @@ const authOptions = {
       authorization: { params: { scope: "identify email connections guilds" } },
       profile(profile) {
         console.log("In profile");
+        console.log(profile);
         return {
-          discordId: profile.id, // Maps to the 'discordId' field in UserSchema
+          id: profile.id , // Maps to the 'discordId' field in UserSchema
           email: profile.email, // Maps to the 'email' field in UserSchema
           username: profile.username, // Maps to the 'username' field in UserSchema
           ProfilePicture: `${profile.avatar}.png`, // Maps to 'ProfilePicture'
           DisplayName: profile.global_name || profile.username, // Maps to 'Dis playName' (fallback to username if global_name is null)
           BannerColor: profile.banner_color || null, // Maps to 'BannerColor' (null if not provided)
           IsVerified: profile.verified, // Maps to 'IsVerified'
-          status: "user", // Default status is 'user' (set explicitly)
-          bannedUntil: null, // Default to null (no ban applied)
-          bannedReason: null, // Default to null (no ban applied)
         };
       },
     }),
@@ -31,7 +29,8 @@ const authOptions = {
         console.log("Attempting Sign In...");
         console.log("User:", user);
         // Check if user exists in the database
-        const existingUser = await getUser(user.discordId);
+        const existingUser = await getUser(user.id);
+        console.log("Existing User:", existingUser);
 
         if (!existingUser) {
           console.log("User does not exist in the database. Creating user...");
@@ -39,7 +38,7 @@ const authOptions = {
           await createUser({
             email: user.email, // Maps to email
             username: user.username, // Maps to username
-            discordId: user.discordId, // Maps to discordId
+            discordId: user.id, // Maps to discordId
             ProfilePicture: user.ProfilePicture || null, // Maps to ProfilePicture
             DisplayName: user.DisplayName, // Maps to DisplayName
             BannerColor: user.BannerColor || null, // Maps to BannerColor
@@ -59,14 +58,31 @@ const authOptions = {
     },
     async jwt({ token, user }) {
       if (user) {
-        token.discordId = user.discordId;
-        token.globalName = user.globalName;
+        console.log("In jwt callback");
+        
+        token.discordId = user.id;
+        token.username = user.username;
+        token.ProfilePicture = user.ProfilePicture;
+        token.DisplayName = user.DisplayName;
+        token.BannerColor = user.BannerColor;
+        token.IsVerified = user.IsVerified;
+
+
+        console.log(user);
       }
       return token;
     },
     async session({ session, token }) {
+      console.log("In session callback");
+      
       session.user.discordId = token.discordId;
-      session.user.globalName = token.globalName;
+      session.user.username = token.username;
+      session.user.ProfilePicture = token.ProfilePicture;
+      session.user.DisplayName = token.DisplayName;
+      session.user.BannerColor = token.BannerColor;
+      session.user.IsVerified = token.IsVerified;
+      
+      console.log(session);
       return session;
     },
   },
