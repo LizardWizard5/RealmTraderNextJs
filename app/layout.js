@@ -22,6 +22,10 @@ import Header from "./header"
 import Footer from "./footer";
 import { Children } from "react";
 import { SessionProvider } from "next-auth/react";
+
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 //import Footer from "./footer" 
 
 export default function RootLayout({ children }) {
@@ -41,21 +45,3 @@ export default function RootLayout({ children }) {
   );
 }
 
-/*
-export default function RootLayout({ children, pageProps: { session, ...pageProps } }) {
-  return (
-    <SessionProvider session={session}>
-      <html lang="en">
-
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <Header />
-          <Children {...pageProps} />
-        </body>
-
-      </html>
-    </SessionProvider>
-  );
-}
-*/

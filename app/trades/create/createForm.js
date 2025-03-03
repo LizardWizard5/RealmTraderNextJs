@@ -41,7 +41,13 @@ export default function Form() {
     }
 
     return (
-        <form id="tradeForm" className="" action={createTrade} >
+        
+        <form id="tradeForm" className="flex flex-col" action={createTrade} >
+            <div className="flex flex-row items-center mb-4">
+            <label htmlFor="tradeItems" className="mr-1">Seasonal</label>
+            <input type="checkbox" id="isSeasonal" name="isSeasonal"></input>
+            </div>
+            
             <input
                 type="submit"
                 className="bg-gray-800 text-white px-4 py-2 rounded-md shadow hover:bg-gray-700 transition"

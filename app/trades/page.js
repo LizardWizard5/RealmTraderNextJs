@@ -1,30 +1,62 @@
-
+'use client';
 import React from "react";
-import { getTrades } from "../lib/databaseCalls";
-
-
 import RequestTrade from "./RequestTrade";
-import ClientTradeList from "./ClientTradeList";
-import ClientFilterUI from "./ClientFilterUI";
+import ClientFilterUI from "./clientFilterUI";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+import { faBackward } from "@fortawesome/free-solid-svg-icons";
 
 
+export default function Trades() {
+    const [allTrades, setAllTrades] = React.useState([]);
+    const [displayedTrades, setDisplayedTrades] = React.useState([]);
+    const [page, setPage] = React.useState(1);
+    const pageSize = 15;
 
-export default async function Trades() {
+    React.useEffect(() => {
+        async function fetchData() {
+            const response = await fetch("/api/trades");
+            const data = await response.json();
+            setAllTrades(data);
+            // Set the initial page of trades
+            setDisplayedTrades(data.slice(0, pageSize));
+        }
+        fetchData();
+    }, []);
 
-    
-    
-    const trades = await getTrades();
-
+    function handlePageChange(number) {
+        if (page + number > Math.ceil(allTrades.length / pageSize) || page + number == 0) {
+            return;
+        }
+        const nextPage = page + number;
+        setPage(nextPage);
+        const startIndex = (nextPage - 1) * pageSize;
+        const endIndex = nextPage * pageSize;
+        // Slice the allTrades array to get the trades for the next page
+        setDisplayedTrades(allTrades.slice(startIndex, endIndex));
+    }
 
     return (
         <div className="flex flex-row justify-center">
-            
-            <div className="w-1/5 m-5" key="filter">
-                <ClientFilterUI/>
-
+            <div className="w-1/5 m-5 " key="filter">
+                <div className="justify-center">
+                    <a href="/trades/create">
+                    <button className="bg-header hover:bg-gray-700 text-white font-bold py-2 px-4 mb-2 w-full">
+                        Create Trade
+                    </button>
+                    </a>
+                </div>
+                <ClientFilterUI />
             </div>
-            <div className="w-3/5 mt-5" key="tradeCards">
-                {trades.map((trade) => (
+            <div className="w-3/5 mt-5 " key="tradeCards">
+                <div className="flex flex-row justify-evenly mb-2">
+
+                    <button onClick={() => handlePageChange(-1)}><FontAwesomeIcon icon={faBackward} /></button>
+                    <p>Page {page}/{Math.ceil(allTrades.length / pageSize)}</p>
+                    <button onClick={() => handlePageChange(1)}><FontAwesomeIcon icon={faBackward} flip="horizontal" /></button>
+                </div>
+
+                {displayedTrades.map((trade) => (
                     <div key={trade._id}>
                         <div className='bg-white shadow-md rounded-lg p-6 mb-4' key={trade._id}>
                             <h1 className='text-xl font-bold mb-2'>Trader: {trade.trader}</h1>
@@ -46,17 +78,20 @@ export default async function Trades() {
                                         </div>
                                     ))}
                                 </div>
-                                <div className='ml-auto' >
+                                <div className='ml-auto'>
                                     <RequestTrade tradeId={trade._id} />
-
                                 </div>
-
                             </div>
                             <p className='text-gray-500 text-sm'>{trade.uid} - {trade.time}</p>
                         </div>
                     </div>
-
                 ))}
+                <div className="flex flex-row justify-evenly mb-2">
+
+                    <button onClick={() => handlePageChange(-1)}><FontAwesomeIcon icon={faBackward} /></button>
+                    <p>Page {page}/{Math.ceil(allTrades.length / pageSize)}</p>
+                    <button onClick={() => handlePageChange(1)}><FontAwesomeIcon icon={faBackward} flip="horizontal" /></button>
+                </div>
             </div>
         </div>
     );

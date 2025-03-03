@@ -1,7 +1,6 @@
 
 import { getTrades, createTrade } from "@/app/lib/databaseCalls";
 import { createRandomString } from "@/app/lib/useful";
-import {getSession} from 'next-auth/client'
 
 export async function GET(request) {
     const trades = await getTrades();

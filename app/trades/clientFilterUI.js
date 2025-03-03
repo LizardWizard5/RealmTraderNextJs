@@ -29,6 +29,11 @@ export default function ClientFilterUI() {
                         </div>
                         <div className="flex flex-row items-center mb-4">
                             <img alt="mystery stat potion icon" className="icon" src="items/mystery-potion.png" />
+                            <a className="ml-2">Seasonal</a>
+                            <input type="checkbox" className="tradeFilterCheckbox ml-auto" id="seasonalCheckbox" name="seasonal" value="yes" />
+                        </div>
+                        <div className="flex flex-row items-center mb-4">
+                            <img alt="mystery stat potion icon" className="icon" src="items/mystery-potion.png" />
                             <a className="ml-2">Stat pots</a>
                             <input type="checkbox" className="tradeFilterCheckbox ml-auto" id="statPotsCheckbox" name="stat potion" value="yes" />
                         </div>
@@ -63,8 +68,8 @@ export default function ClientFilterUI() {
                             <input type="checkbox" className="tradeFilterCheckbox ml-auto" id="abilitiesCheckbox" name="ability" value="yes" />
                         </div>
                     </div>
-                    <div className="">
-                        <button className="bg-header hover:bg-gray-700 text-white font-bold py-2 px-4 m-5 w-11/12">
+                    <div className="justify-center">
+                        <button className="bg-header hover:bg-gray-700 text-white font-bold py-2 px-4 m-2 w-11/12">
                             Filter
                         </button>
                     </div>

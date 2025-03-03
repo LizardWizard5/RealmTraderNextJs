@@ -41,6 +41,7 @@ export default async function Page() {
             <AddItemComponent items={items} state="buying" />
           </div>
         </div>
+       
       </div>
       {/* Form Section */}
       <div className="flex flex-row justify-center mt-8">
