@@ -3,7 +3,6 @@ import React from "react";
 import RequestTrade from "./RequestTrade";
 import ClientFilterUI from "./clientFilterUI";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import { faBackward } from "@fortawesome/free-solid-svg-icons";
 
 
@@ -39,13 +38,7 @@ export default function Trades() {
     return (
         <div className="flex flex-row justify-center">
             <div className="w-1/5 m-5 " key="filter">
-                <div className="justify-center">
-                    <a href="/trades/create">
-                    <button className="bg-header hover:bg-gray-700 text-white font-bold py-2 px-4 mb-2 w-full">
-                        Create Trade
-                    </button>
-                    </a>
-                </div>
+                
                 <ClientFilterUI />
             </div>
             <div className="w-3/5 mt-5 " key="tradeCards">
@@ -60,7 +53,7 @@ export default function Trades() {
                     <div key={trade._id}>
                         <div className='bg-white shadow-md rounded-lg p-6 mb-4' key={trade._id}>
                             <h1 className='text-xl font-bold mb-2'>Trader: {trade.trader}</h1>
-                            <div className='flex flex-row items-center mb-4'>
+                            <div className='flex flex-row items-center mb-4 flex-nowrap'>
                                 <div className='flex flex-wrap'>
                                     {trade.trading.map((item) => (
                                         <div key={item._id} className='flex items-center mr-4 mb-2'>

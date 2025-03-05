@@ -33,12 +33,15 @@ export default function RootLayout({ children }) {
     <html lang="en">
       
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
       >
+        
         <SessionProvider>
           <Header/>
+          <main className="flex-grow">
           {children}
           <Footer/>
+          </main>
         </SessionProvider>
       </body>
     </html>

@@ -66,6 +66,7 @@ const authOptions = {
         token.DisplayName = user.DisplayName;
         token.BannerColor = user.BannerColor;
         token.IsVerified = user.IsVerified;
+        token.status = user.status;
 
 
         console.log(user);
@@ -81,6 +82,7 @@ const authOptions = {
       session.user.DisplayName = token.DisplayName;
       session.user.BannerColor = token.BannerColor;
       session.user.IsVerified = token.IsVerified;
+      session.user.status = token.status;
       
       console.log(session);
       return session;

@@ -40,6 +40,12 @@ export async function getUser(discordId) {
     return user;
 }
 
+export async function getUserTrades(discordId){
+    await dbConnect();
+    const trades = await Trade.find({trader:discordId});
+    return trades;
+}
+
 /**
  * 
  * @returns Array of items
