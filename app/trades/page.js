@@ -52,8 +52,8 @@ export default function Trades() {
                 {displayedTrades.map((trade) => (
                     <div key={trade._id}>
                         <div className='bg-white shadow-md rounded-lg p-6 mb-4' key={trade._id}>
-                            <h1 className='text-xl font-bold mb-2'>Trader: {trade.trader}</h1>
-                            <div className='flex flex-row items-center mb-4 flex-nowrap'>
+                            
+                            <div className='flex flex-row items-center mb-2 flex-nowrap mt-2'>
                                 <div className='flex flex-wrap'>
                                     {trade.trading.map((item) => (
                                         <div key={item._id} className='flex items-center mr-4 mb-2'>

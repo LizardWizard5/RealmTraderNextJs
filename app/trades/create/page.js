@@ -12,7 +12,7 @@ export default async function Page() {
   let items = await getItems();
   const states = ["selling", "buying"];
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
+    <div className="bg-white p-6 rounded-lg shadow-md min-h-screen">
       <div className="text-center mb-6">
         <p className="text-gray-600">
           Click on an item to remove it from the trade. Add items to the "Selling" or "Buying" sections below.

@@ -5,15 +5,16 @@ import { getSession } from "next-auth/react"
 
 export async function POST(request) {
     console.log(request)
-    const session = await getSession({ request })
-    console.log(session);
+    const body = await request.json();
+    const requester = body.requester;
+    console.log(requester + " is requesting a trade alert");
 
-    if (!session) {
+    if (!requester) {
         console.log("Unauthorized");
         return new Response(JSON.stringify({status:"401", message: "Unauthorized" }));
     }
     console.log("Authorized");
-    const body = await request.json();
+    
     console.log(body);
     await sendTradeAlert(body.tradeId.tradeId);
     return new Response(JSON.stringify({ message: "Trade Alert Sent" }), {

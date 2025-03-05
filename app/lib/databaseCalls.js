@@ -34,11 +34,24 @@ export async function getTradeById(id) {
  * @param {String} discordId 
  * @returns User
  */
-export async function getUser(discordId) {
+export async function getUserByDiscordId(discordId) {
     await dbConnect();
     const user = await User.findOne({ discordId});
     return user;
 }
+
+
+/**
+ * 
+ * @param {String} id
+ * @returns User
+ */
+export async function getUserById(id) {
+    await dbConnect();
+    const user = await User.findById(id);
+    return user;
+}
+
 
 export async function getUserTrades(discordId){
     await dbConnect();
@@ -80,3 +93,8 @@ export async function createUser(user) {
     await accountRating.create(accountRate);
 }
 
+export async function getUserRatings(discordId){
+    await dbConnect();
+    const ratings = await accountRating.findOne({accountId:discordId})
+    return ratings;
+}

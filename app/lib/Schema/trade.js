@@ -31,6 +31,10 @@ const TradeSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    isComplete: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 // Prevent OverwriteModelError

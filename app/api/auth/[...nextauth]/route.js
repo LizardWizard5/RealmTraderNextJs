@@ -1,13 +1,13 @@
 import NextAuth from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
-import { getUser, createUser } from "@/app/lib/databaseCalls";
+import { getUser, createUser, getUserById, getUserByDiscordId } from "@/app/lib/databaseCalls";
 
 const authOptions = {
   providers: [
     DiscordProvider({
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      authorization: { params: { scope: "identify email connections guilds" } },
+      authorization: { params: { scope: "identify email" } },
       profile(profile) {
         console.log("In profile");
         console.log(profile);
@@ -29,13 +29,13 @@ const authOptions = {
         console.log("Attempting Sign In...");
         console.log("User:", user);
         // Check if user exists in the database
-        const existingUser = await getUser(user.id);
-        console.log("Existing User:", existingUser);
+        const User = await getUserByDiscordId(user.id);
+        console.log("Existing User:", User);
 
-        if (!existingUser) {
+        if (!User) {
           console.log("User does not exist in the database. Creating user...");
           // If the user doesn't exist, insert into the database
-          await createUser({
+          const User = await createUser({
             email: user.email, // Maps to email
             username: user.username, // Maps to username
             discordId: user.id, // Maps to discordId
@@ -47,7 +47,9 @@ const authOptions = {
             bannedUntil: null, // Default to null (no ban applied)
             bannedReason: null, // Default to null (no ban applied)
           });
+          
         }
+        user.mongoId = User._id;
 
         // Return true to proceed with the authentication
         return true;
@@ -59,7 +61,7 @@ const authOptions = {
     async jwt({ token, user }) {
       if (user) {
         console.log("In jwt callback");
-        
+        token.id = user.mongoId;
         token.discordId = user.id;
         token.username = user.username;
         token.ProfilePicture = user.ProfilePicture;
@@ -75,7 +77,7 @@ const authOptions = {
     },
     async session({ session, token }) {
       console.log("In session callback");
-      
+      session.user.id = token.id;
       session.user.discordId = token.discordId;
       session.user.username = token.username;
       session.user.ProfilePicture = token.ProfilePicture;
