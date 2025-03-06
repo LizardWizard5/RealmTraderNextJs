@@ -28,7 +28,7 @@ export default function ClientFilterUI() {
                             <input type="checkbox" className="tradeFilterCheckbox ml-auto" id="sellingCheckbox" name="buying" value="yes" />
                         </div>
                         <div className="flex flex-row items-center mb-4">
-                            <img alt="mystery stat potion icon" className="icon" src="items/mystery-potion.png" />
+                            <img alt="mystery stat potion icon" className="icon" src="/seasonal-icon.png" />
                             <a className="ml-2">Seasonal</a>
                             <input type="checkbox" className="tradeFilterCheckbox ml-auto" id="seasonalCheckbox" name="seasonal" value="yes" />
                         </div>

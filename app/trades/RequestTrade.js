@@ -31,6 +31,6 @@ export default function RequestTrade(tradeId) {
     }
 
     return (
-        <button className='bg-header ho ver:bg-gray-700 text-white font-bold py-2 px-4 rounded'  disabled={isDisabled} onClick={ handleTradeRequest} >{buttonText}</button>
+        <button className='bg-header text-white font-bold py-2 px-4 rounded  hover:bg-gray-700 hover:text-yellow-300'  disabled={isDisabled} onClick={ handleTradeRequest} >{buttonText}</button>
     )
 }

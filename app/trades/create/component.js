@@ -1,21 +1,21 @@
 "use client";
 
 import React from "react";
-import { Tooltip } from "@nextui-org/tooltip";
 
-import {
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Button,
-    useDisclosure,
-} from "@nextui-org/react";
+
+import Button from '@mui/joy/Button';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import Input from '@mui/joy/Input';
+import Modal from '@mui/joy/Modal';
+import ModalDialog from '@mui/joy/ModalDialog';
+import DialogTitle from '@mui/joy/DialogTitle';
+import DialogContent from '@mui/joy/DialogContent';
+import Stack from '@mui/joy/Stack';
+
 
 export default function AddItemComponent({ items, state }) {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [size, setSize] = React.useState("md");
+    const [open, setOpen] = React.useState(false);
     /**
      * 
      * "id":{
@@ -31,52 +31,56 @@ export default function AddItemComponent({ items, state }) {
 
 
         const inputs = document.getElementById("tradeForm").getElementsByTagName("input");
-        
+
         //Check if item already exists in tradeItems
         for (let i = 0; i < inputs.length; i++) {
-            if(inputs[i].name === "tradeItems"){
+            if (inputs[i].name === "tradeItems") {
                 let currentInput = JSON.parse(inputs[i].value);
-                if (currentInput.id == item._id){
-                    inputs[i].value = JSON.stringify({id:item._id, amount:currentInput.amount+1, imageUrl:item.imageUrl, tags:item.tags, selling:state === "selling"});
-                    let p = document.getElementById(item._id+"-"+state);
-                    p.innerHTML = currentInput.amount+1;
+                if (currentInput.id == item._id) {
+                    inputs[i].value = JSON.stringify({ id: item._id, amount: currentInput.amount + 1, imageUrl: item.imageUrl, tags: item.tags, selling: state === "selling" });
+                    let p = document.getElementById(item._id + "-" + state);
+                    p.innerHTML = currentInput.amount + 1;
                     return;
                 }
             }
-            
+
         }
 
 
         let itemList = document.getElementById("itemList-" + state);
-        let doc = document.createElement("div");
+        let doc = document.createElement("Tooltip");
+        doc.setAttribute("title", "Delete");
+        doc.setAttribute("variant", "outlined");
         doc.className = "flex flex-row";
-        doc.innerHTML = "<img src='/items/" + item.imageUrl + ".png' class='w-14 h-14' /><p id='"+item._id+"-"+state+"'>1</p>";
-        
-        itemList.appendChild(doc);
+        doc.innerHTML = "<img variant='outlined' src='/items/" + item.imageUrl + ".png' class='w-14 h-14' /><p id='" + item._id + "-" + state + "'>1</p>";
 
+        itemList.appendChild(doc);
+        //Setup event listener to remove item from ui and form.
         doc.addEventListener("click", function () {
             itemList.removeChild(doc);
-            
+            let input = document.getElementById(item._id + state);
+            input.remove();
+
         });
-        
 
 
-         //Add tradeItem as hidden input in form
-         let tradeForm = document.getElementById("tradeForm");
-         let input = document.createElement("input");
-         input.name = "tradeItems";
-         input.type = "hidden";
-         input.id = item._id+state;
-         input.value = JSON.stringify({id:item._id, amount:1, imageUrl:item.imageUrl,tags:item.tags, selling:state === "selling"});
-         tradeForm.appendChild(input);
 
-        
-        
-        
+        //Add tradeItem as hidden input in form
+        let tradeForm = document.getElementById("tradeForm");
+        let input = document.createElement("input");
+        input.name = "tradeItems";
+        input.type = "hidden";
+        input.id = item._id + state;
+        input.value = JSON.stringify({ id: item._id, amount: 1, imageUrl: item.imageUrl, tags: item.tags, selling: state === "selling" });
+        tradeForm.appendChild(input);
 
-       
 
-        
+
+
+
+
+
+
     };
     const handleOpen = (size) => {
         setSize(size);
@@ -88,14 +92,45 @@ export default function AddItemComponent({ items, state }) {
             <div className="flex flex-row justify-center" id={"itemList-" + state}>
 
             </div>
-            <Button
-  className="bg-white text-black border-2 border-gray-300 rounded-md w-10 h-10 flex items-center justify-center hover:bg-gray-100 shadow-md"
-  onPress={() => handleOpen("xl")}
->
-  +
-</Button>
 
-            <Modal
+            <React.Fragment>
+                <Button
+                    className="bg-white text-black border-2 border-gray-300 rounded-md w-10 h-10 flex items-center justify-center hover:bg-gray-100 shadow-md"
+                    variant="outlined"
+                    color="neutral"
+
+                    onClick={() => setOpen(true)}
+                >
+                    +
+                </Button>
+                <Modal open={open} onClose={() => setOpen(false)}>
+                    <ModalDialog size="lg" className="w-2/3 flex ">
+                        <DialogTitle>{state[0].toUpperCase() + "" + state.slice(1) + " Items"}</DialogTitle>
+                        <div className="flex flex-row flex-wrap gap-2 ">
+                            {items.map((item) => (
+                                <div key={item._id}>
+
+                                    <button onClick={() => onPress(item)}>
+                                        <img src={"/items/" + item.imageUrl + ".png"} className="w-14 h-14" />
+                                    </button>
+
+                                </div>
+                            ))}
+                        </div>
+
+                    </ModalDialog>
+                </Modal>
+            </React.Fragment>
+
+        </>
+    );
+};
+
+
+
+
+/**
+ <Modal
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 size="xl"
@@ -124,8 +159,4 @@ export default function AddItemComponent({ items, state }) {
                     )}
                 </ModalContent>
             </Modal>
-        </>
-    );
-};
-
-
+ */
