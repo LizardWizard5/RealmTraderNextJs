@@ -6,10 +6,12 @@ const token =  process.env.BOT_TOKEN;
 
 client.login(token); 
 
-export async function sendTradeAlert(tradeId) {
+export async function sendTradeAlert(tradeId, username) {
+
     let trade = await getTradeById(tradeId);
-    const userId = "266774102373564426";
-    const message = `Hey Trader! Someone is interested in your trade! ( https://lizardwizard.ca/trade/view/${tradeId} ) Please reach out to them here: LizardWizard#0001`;
+    const userId = trade.trader;
+    
+    const message = `Hey Trader! Someone is interested in your trade! ( https://lizardwizard.ca/trade/view/${tradeId} ) Please reach out to them here: @${username}`;
 
     try {
         await client.users.send(userId, message);

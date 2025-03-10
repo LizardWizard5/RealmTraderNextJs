@@ -14,7 +14,7 @@ export async function POST(request) {
 
     
     console.log(body);
-    await sendTradeAlert(body.tradeId.tradeId);
+    await sendTradeAlert(body.tradeId.tradeId, session.user.username);
     return new Response(JSON.stringify({status:"200", message: "Request Sent" }), {
         headers: { "Content-Type": "application/json" },
     });
