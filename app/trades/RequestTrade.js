@@ -8,24 +8,35 @@ export default function RequestTrade(tradeId) {
     const { data: session, status } = useSession();
 
     async function handleTradeRequest() {
+        setIsDisabled(true);
         //API call to send trade request
+        if(buttonText === 'Log in to Request Trade'){
+            window.location.href = "/api/auth/signin";
+            return;   
+        }
 
         if(!session){
             setButtonText('Log in to Request Trade');
-            setIsDisabled(true);
+            setIsDisabled(false);
+            
             return;
         }
+        
         //POST API call to /api/trades/request. The body of the request should be the tradeId
         const response = await fetch('/api/trades/request', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ tradeId: tradeId,requester: session.user.id }),
+            body: JSON.stringify({ tradeId: tradeId }),
+            credentials: "include",
+
 
         });
+        const data = await response.json();
+        console.log(data);
 
-        setButtonText('Request Sent');
+        setButtonText(data.message);
         setIsDisabled(true);
 
     }

@@ -1,7 +1,8 @@
 
 import { getTrades, createTrade } from "@/app/lib/databaseCalls";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]/route";
 import { createRandomString } from "@/app/lib/useful";
-import { getSession } from "next-auth/react";
 
 export async function GET(request) {
     const trades = await getTrades();
@@ -11,16 +12,16 @@ export async function GET(request) {
 }
 
 
-export async function POST(request) {
-    // Parse the form data from the request
-    /*
-    const session = await getSession({request})
-    console.log(session);
+export async function POST(request, res) {
+
+    const session = await getServerSession(authOptions);
+
     if (!session) {
-        return new Response(JSON.stringify({status:"401", message: "Unauthorized" }));
+        return new Response(JSON.stringify({ status: "400", message: 'Log in to Create Trade' }));
     }
-*/
-    const formData = await request.formData();  
+    console.log(session);
+
+    const formData = await request.formData();
     console.log(formData);
     let selling = [];
     let buying = [];
@@ -28,11 +29,11 @@ export async function POST(request) {
     const tradeItems = formData.getAll("tradeItems");
     let sellingTags = [];
     let buyingTags = [];
-    
 
-    for (let i=0; i<tradeItems.length; i++){
+
+    for (let i = 0; i < tradeItems.length; i++) {
         let item = JSON.parse(tradeItems[i]);
-        if (item.selling){
+        if (item.selling) {
             sellingTags.push.apply(sellingTags, item.tags);
             selling.push(item);
         }
@@ -40,23 +41,25 @@ export async function POST(request) {
             buyingTags.push.apply(buyingTags, item.tags);
             buying.push(item);
         }
-    }   
-
-    if(selling.length === 0 || buying.length === 0){
-        return new Response(JSON.stringify({status:"400", message: "Trade must have at least one item in each section" }));
     }
-    
+
+    if (selling.length === 0 || buying.length === 0) {
+        return new Response(JSON.stringify({ status: "400", message: "Trade must have at least one item in each section" }));
+    }
+
+    let isSeasonal = formData.get("isSeasonal") === "on" ? true : false;
     let finalTrade = {
-        trader:"Unknown NEXTJS User",
+        trader: session.user.discordId,
         time: new Date(8.64e15).toString(),
         trading: selling,
         tradingFor: buying,
         buyingTags: [...new Set(buyingTags)],
-        sellingTags:[... new Set(sellingTags)],
+        sellingTags: [... new Set(sellingTags)],
+        isSeasonal: isSeasonal,
         uid: createRandomString(5),
     }
     await createTrade(finalTrade);
 
-    return new Response(JSON.stringify({status:"200", message: "Trade Created" }));
-    
+    return new Response(JSON.stringify({ status: "200", message: "Trade Created" }));
+
 }

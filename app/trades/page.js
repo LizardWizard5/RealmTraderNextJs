@@ -75,7 +75,10 @@ export default function Trades() {
                                     <RequestTrade tradeId={trade._id} />
                                 </div>
                             </div>
-                            <p className='text-gray-500 text-sm'>{trade.uid} - {trade.time}</p>
+                            {trade.isSeasonal ? 
+                            <p className='text-gray-500 text-sm'>{trade.uid} - {trade.time.split(" ").splice(0,3).join(" ")} - <span className="bg-blue-500 text-white p-1 rounded-lg">Seasonal</span></p>
+                             : <p className='text-gray-500 text-sm'>{trade.uid} - {trade.time.split(" ").splice(0,3).join(" ")}</p>}
+                            
                         </div>
                     </div>
                 ))}

@@ -1,23 +1,21 @@
 import { sendTradeAlert } from "@/app/lib/discordBot";
 
-
-import { getSession } from "next-auth/react"
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function POST(request) {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+        return new Response(JSON.stringify({ status: "400", message: 'Log in to Request Trade' }));
+    }
     console.log(request)
     const body = await request.json();
-    const requester = body.requester;
-    console.log(requester + " is requesting a trade alert");
 
-    if (!requester) {
-        console.log("Unauthorized");
-        return new Response(JSON.stringify({status:"401", message: "Unauthorized" }));
-    }
-    console.log("Authorized");
     
     console.log(body);
     await sendTradeAlert(body.tradeId.tradeId);
-    return new Response(JSON.stringify({ message: "Trade Alert Sent" }), {
+    return new Response(JSON.stringify({status:"200", message: "Request Sent" }), {
         headers: { "Content-Type": "application/json" },
     });
     /*
