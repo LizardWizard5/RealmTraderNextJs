@@ -17,6 +17,7 @@ export async function getTrades() {
     return trades;
 }
 
+
 /**
  * 
  * @param {String} id 
@@ -56,6 +57,7 @@ export async function getUserById(id) {
 export async function getUserTrades(discordId){
     await dbConnect();
     const trades = await Trade.find({trader:discordId});
+    
     return trades;
 }
 
