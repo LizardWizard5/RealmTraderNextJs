@@ -7,7 +7,6 @@ const token =  process.env.BOT_TOKEN;
 client.login(token); 
 
 export async function sendTradeAlert(tradeId, username) {
-
     let trade = await getTradeById(tradeId);
     const userId = trade.trader;
     

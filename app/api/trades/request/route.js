@@ -9,12 +9,10 @@ export async function POST(request) {
     if (!session) {
         return new Response(JSON.stringify({ status: "400", message: 'Log in to Request Trade' }));
     }
-    console.log(request)
     const body = await request.json();
 
     
-    console.log(body);
-    await sendTradeAlert(body.tradeId.tradeId, session.user.username);
+    await sendTradeAlert(body.tradeId, session.user.username);
     return new Response(JSON.stringify({status:"200", message: "Request Sent" }), {
         headers: { "Content-Type": "application/json" },
     });
