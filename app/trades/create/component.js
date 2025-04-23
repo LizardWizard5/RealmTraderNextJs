@@ -30,13 +30,16 @@ export default function AddItemComponent({ items, state }) {
     const onPress = (item) => {
 
 
+
         const inputs = document.getElementById("tradeForm").getElementsByTagName("input");
 
         //Check if item already exists in tradeItems
         for (let i = 0; i < inputs.length; i++) {
             if (inputs[i].name === "tradeItems") {
                 let currentInput = JSON.parse(inputs[i].value);
-                if (currentInput.id == item._id) {
+
+                if (currentInput.id == item._id && currentInput.selling == (state === "selling")) {
+
                     inputs[i].value = JSON.stringify({ id: item._id, amount: currentInput.amount + 1, imageUrl: item.imageUrl, tags: item.tags, selling: state === "selling" });
                     let p = document.getElementById(item._id + "-" + state);
                     p.innerHTML = currentInput.amount + 1;

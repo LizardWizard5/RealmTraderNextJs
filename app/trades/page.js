@@ -195,7 +195,9 @@ export default function Trades() {
                                             </div>
                                         ))}
                                     </div>
-                                    <div className='ml-auto'>
+                                    <div className='ml-auto justify-evenly'>
+                                        <a className="mr-5">        <button className='bg-header text-white font-bold py-2 px-4 rounded  hover:bg-gray-700 hover:text-yellow-300'>View</button>
+                                        </a>
                                         <RequestTrade tradeId={trade._id} />
                                     </div>
                                 </div>
