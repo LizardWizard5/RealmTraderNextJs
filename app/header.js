@@ -38,13 +38,14 @@ export default function Header() {
             {/* Login Section */}
             <div className="login ml-auto">
                 {session ? (
-                    <div className=" hover:border-b-3 hover:border-white flex items-center space-x-1" >
-                        <a href={"/user/" + session.user.id}>
+                    <div className=" hover:border-b-3 hover:border-white flex items-center space-x-1 " >
+                        <a className="flex items-center text-sm"  href={"/user/" + session.user.id}>
                             
                             <img src="/discord-brands-solid.svg" alt="Login Icon" className="w-5 h-5" />
+                        
+                            <span>{session.user.DisplayName}</span>
                         </a>
-                        <span>{session.user.DisplayName}</span>
-                        <button onClick={() => signOut()} className="bg-1F1A24 text-white rounded-lg p-2">Logout</button>
+                        <button onClick={() => signOut()} className="bg-1F1A24 text-white rounded-lg p-2 hover:border-white">Logout</button>
                     </div>
                 ) : (
                     <button className=" hover:border-b-3 hover:border-white flex items-center space-x-1" onClick={() => signIn()} >

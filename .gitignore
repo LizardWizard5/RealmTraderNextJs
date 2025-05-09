@@ -41,3 +41,4 @@ next-env.d.ts
 
 #Dev Files
 /insertTradesDirectly.js
+/public/account/pfp/*

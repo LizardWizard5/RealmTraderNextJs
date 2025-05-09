@@ -93,6 +93,8 @@ export async function createUser(user) {
     }
     //Now create a new account rating for the user
     await accountRating.create(accountRate);
+
+    return newAccount;
 }
 
 export async function getUserRatings(discordId){

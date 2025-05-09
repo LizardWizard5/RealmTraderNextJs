@@ -174,56 +174,11 @@ export default function Trades(trades) {
 
                         </div>
 
-                        <button onClick={() => handlePageChange(-1)}><FontAwesomeIcon icon={faBackward} /></button>
-                        <p>Page {page}/{Math.ceil(modifiableTrades.length / pageSize)}</p>
-                        <button onClick={() => handlePageChange(1)}><FontAwesomeIcon icon={faBackward} flip="horizontal" /></button>
+                       
                     </div>
 
-                    {displayedTrades.map((trade) => (
-                        <div key={trade._id}>
-                            <div className='bg-white shadow-md rounded-lg p-6 mb-4' key={trade._id}>
-
-                                <div className='flex flex-row items-center mb-2 flex-nowrap mt-2'>
-                                    <div className='flex flex-wrap'>
-                                        {trade.trading.map((item) => (
-                                            <div key={item._id} className='flex items-center mr-4 mb-2'>
-                                                <img className='w-10 h-10 mr-2' src={"items/" + item.imageUrl + ".png"} alt={item.name} />
-                                                <p className='text-sm font-medium'>x{item.amount}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <p className='mx-4 text-lg font-semibold'>for</p>
-                                    <div className='flex flex-wrap'>
-                                        {trade.tradingFor.map((item) => (
-                                            <div key={item._id} className='flex items-center mr-4 mb-2'>
-                                                <img className='w-10 h-10 mr-2' src={"items/" + item.imageUrl + ".png"} alt={item.name} />
-                                                <p className='text-sm font-medium'>x{item.amount}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className='ml-auto justify-evenly'>
-                                        <a className="mr-5">        <button className='bg-header text-white font-bold py-2 px-4 rounded  hover:bg-gray-700 hover:text-yellow-300'>View</button>
-                                        </a>
-                                        <RequestTrade tradeId={trade._id} />
-                                    </div>
-                                </div>
-                                <div className='flex flex-col'>
-                                    {/*<p className="text-gray-500 text-sm mb-2">Buying Tags: {trade.buyingTags.map((tag) => <span className="bg-blue-500 text-white p-1 rounded-lg ml-1">{tag}</span>)}  - Selling Tags: {trade.sellingTags.map((tag) => <span className="bg-blue-500 text-white p-1 rounded-lg">{tag}</span>)}</p>*/}
-                                    {trade.isSeasonal ?
-                                        <p className='text-gray-500 text-sm'>{trade.uid} - {trade.time.split(" ").splice(0, 3).join(" ")} - <span className="bg-blue-500 text-white p-1 rounded-lg">Seasonal</span></p>
-                                        : <p className='text-gray-500 text-sm'>{trade.uid} - {trade.time.split(" ").splice(0, 3).join(" ")} </p>}
-
-                                </div>
-
-                            </div>
-                        </div>
-                    ))}
-                    <div className="flex flex-row justify-evenly mb-2">
-
-                        <button onClick={() => handlePageChange(-1)}><FontAwesomeIcon icon={faBackward} /></button>
-                        <p>Page {page}/{Math.ceil(allTrades.length / pageSize)}</p>
-                        <button onClick={() => handlePageChange(1)}><FontAwesomeIcon icon={faBackward} flip="horizontal" /></button>
-                    </div>
+                    
+                    
                 </div>
             </div>
             <div className="w-3/5 mt-5 " key="tradeCards">
@@ -269,7 +224,8 @@ export default function Trades(trades) {
                                 {/*<p className="text-gray-500 text-sm mb-2">Buying Tags: {trade.buyingTags.map((tag) => <span className="bg-blue-500 text-white p-1 rounded-lg ml-1">{tag}</span>)}  - Selling Tags: {trade.sellingTags.map((tag) => <span className="bg-blue-500 text-white p-1 rounded-lg">{tag}</span>)}</p>*/}
                                 {trade.isSeasonal ?
                                     <p className='text-gray-500 text-sm'>{trade.uid} - {trade.time.split(" ").splice(0, 3).join(" ")} - <span className="bg-blue-500 text-white p-1 rounded-lg">Seasonal</span></p>
-                                    : <p className='text-gray-500 text-sm'>{trade.uid} - {trade.time.split(" ").splice(0, 3).join(" ")} </p>}
+                                    : 
+                                    <p className='text-gray-500 text-sm'>{trade.uid} - {trade.time.split(" ").splice(0, 3).join(" ")} </p>}
 
                             </div>
 
