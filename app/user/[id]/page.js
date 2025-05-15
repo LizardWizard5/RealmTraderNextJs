@@ -1,13 +1,25 @@
-
+'use client'
 import React from "react";
 import { getUserById, getUserTrades, getUserRatings } from "@/app/lib/databaseCalls";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Trades from "@/app/trades/page";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faGavel } from "@fortawesome/free-solid-svg-icons";    
 import { RequestTrade } from "@/app/trades/RequestTrade";
 import Trade from "@/app/lib/Schema/trade";
 
+/*
+This page requires some rewriting, currently it is written for server side but in order to make the experience better we need to make it client side.
+This means the way calling db through the databaseCalls file is no longer possible. Set up some api routes to replace these.
+*/
+
+
 export default async function page(props) {
+    //Get current user session
+    const { data: session, status } = useSession();
+    
+
     let id = null;
     let user = null;
     let trades = null;
@@ -55,7 +67,7 @@ export default async function page(props) {
 
 
             <header className=" h-[20vh] flex items-center" style={{ backgroundColor: user.BannerColor }}>
-                <div className="max-w-7xl mx-auto px-4 w-full">
+                <div className="max-w-7xl mx-auto px-4 w-2/3">
 
                     <div className="flex items-center">
                         {/* Avatar placeholder */}
@@ -72,8 +84,9 @@ export default async function page(props) {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <p>wasf</p>
+                
+                <div className="w-1/3">
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md"> <FontAwesomeIcon icon={faGavel} /> Ban</button>
                 </div>
             </header>
 
@@ -85,7 +98,6 @@ export default async function page(props) {
                 <div className="bg-gray-200 min-h-100 rounded-md  ">
 
                     <Trades trades={trades} />
-
 
                 </div>
             </main>
