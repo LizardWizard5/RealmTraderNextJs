@@ -1,13 +1,13 @@
 
-import { getUserTrades } from "@/app/lib/databaseCalls";
+import { getUserById } from "@/app/lib/databaseCalls";
 
 
 export async function GET(request){
     let id = null;
-    let trades = null;
+    let user = null;
     try{
         id = request.url.split("/").pop();
-        trades = await getUserTrades(id);
+        user = await getUserById(id);
     }
     catch (error){
         return new Response(JSON.stringify({status: "400", message: "Error! User not found."}));

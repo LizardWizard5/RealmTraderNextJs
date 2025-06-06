@@ -28,8 +28,6 @@ export default function Trades(trades) {
                 response = await fetch("/api/trades");
                 data = await response.json();
             }
-            console.log("Later..");
-            console.log(data);
             setAllTrades(data);
             // Set the initial page of trades
             setModifiableTrades(data);

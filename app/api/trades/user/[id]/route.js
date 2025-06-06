@@ -11,9 +11,6 @@ export async function GET(request) {
         return new Response(JSON.stringify({status: "400", message: "Error! User not found."}));
     }
     
-    if(trade.length == 0){
-        return new Response(JSON.stringify({status: "400", message: "Error! User has no trades."}));
-    }
     
     return new Response(JSON.stringify({status: "200", message: trade}), {
         headers: { "Content-Type": "application/json" },

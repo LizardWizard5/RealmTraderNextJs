@@ -1,115 +1,66 @@
 'use client'
 import React from "react";
-import { getUserById, getUserTrades, getUserRatings } from "@/app/lib/databaseCalls";
-import { useSession, signIn, signOut } from "next-auth/react";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Trades from "@/app/trades/page";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faGavel } from "@fortawesome/free-solid-svg-icons";    
-import { RequestTrade } from "@/app/trades/RequestTrade";
-import Trade from "@/app/lib/Schema/trade";
-
-/*
-This page requires some rewriting, currently it is written for server side but in order to make the experience better we need to make it client side.
-This means the way calling db through the databaseCalls file is no longer possible. Set up some api routes to replace these.
-*/
+import { useParams } from 'next/navigation';
 
 
-export default async function page(props) {
-    //Get current user session
-    const { data: session, status } = useSession();
-    
-
-    let id = null;
-    let user = null;
-    let trades = null;
-    let userRatings = null;
-    let totalRatings = null;
-    try {
-        id = props.params.id;
-        user = await getUserById(id);
-        trades = JSON.parse(JSON.stringify(await getUserTrades(user.discordId)));
-        userRatings = await getUserRatings(id);
-        totalRatings = userRatings.upvotes + userRatings.downvotes;
-    } catch (error) {
-        return (
-            <div className="bg-gray-100 min-h-screen" >
+export default function page() {
+    const {id} = useParams();
 
 
-                <header className=" h-[20vh] flex items-center bg-slate-500" >
-                    <div className="max-w-7xl mx-auto px-4 w-full">
+    let [user, setUser] = React.useState()
+    let [ratings, setRatings] = React.useState();
+    let [trades, setTrades] = React.useState();
+    let [totalRatings,setTotalRatings] = React.useState();
 
-                        <div className="flex items-center">
-                            {/* Avatar placeholder */}
-                            <img src={"/questionmark.png"} className="w-50 h-50 bg-gray-200 rounded-full mr-4 flex-shrink-0" />
-                            {/* Username and stats */}
-                            <div>
-                                <h1 className="text-xl font-semibold text-white " >This user does not exists</h1>
-                                <p className="text-white">Completed Trades: 0</p>
-                                <div className="flex items-center">
-                                    <span className="text-sm text-white">0 <FontAwesomeIcon icon={faThumbsUp} /></span>
-                                    <span className="text-white">|</span>
-                                    <span className="text-sm text-white">0 <FontAwesomeIcon icon={faThumbsUp} flip="vertical" /></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </header>
-            </div>
-        );
-    }
+ 
+       
+        
 
+        React.useEffect(() => {
+            async function fetchData() {
 
+                const userResponse = await fetch(`/api/user/${id}`);
 
-    return (
-
-        <div className="bg-gray-100 min-h-screen" >
-
-
-            <header className=" h-[20vh] flex items-center" style={{ backgroundColor: user.BannerColor }}>
-                <div className="max-w-7xl mx-auto px-4 w-2/3">
-
-                    <div className="flex items-center">
-                        {/* Avatar placeholder */}
-                        <img src={"https://cdn.discordapp.com/avatars/" + user.discordId + "/" + user.ProfilePicture} className="w-30 h-30 bg-gray-200 rounded-full mr-4 flex-shrink-0" />
-                        {/* Username and stats */}
-                        <div>
-                            <h1 className="text-xl font-semibold" style={{ color: user.BannerColor, filter: "invert(100%)" }}>{user.DisplayName}</h1>
-                            <p style={{ color: user.BannerColor, filter: "invert(100%)" }}>Completed Trades: {totalRatings}</p>
-                            <div className="flex items-center">
-                                <span className="text-sm" style={{ color: user.BannerColor, filter: "invert(100%)" }}>{userRatings.upvotes} <FontAwesomeIcon icon={faThumbsUp} /></span>
-                                <span style={{ color: user.BannerColor, filter: "invert(100%)" }}>|</span>
-                                <span className="text-sm" style={{ color: user.BannerColor, filter: "invert(100%)" }}>{userRatings.downvotes} <FontAwesomeIcon icon={faThumbsUp} flip="vertical" /></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                console.log(userResponse);
+                setUser(await userResponse.json());
                 
-                <div className="w-1/3">
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md"> <FontAwesomeIcon icon={faGavel} /> Ban</button>
-                </div>
-            </header>
+                const tradesResponse = await fetch(`/api/trades/user/${id}`);
+                setTrades(await tradesResponse.json());
+                const ratingsResponse = await fetch(`/api/user/${id}/ratings`);
+                setRatings(await ratingsResponse.json());
 
+                setTotalRatings(ratings.upvotes + ratings.downvotes);   
 
-            <main className=" mx-auto px-4 py-8">
-
-                <h2 className="text-xl font-semibold mb-4">{user.DisplayName}'s Trades</h2>
-
-                <div className="bg-gray-200 min-h-100 rounded-md  ">
-
-                    <Trades trades={trades} />
-
-                </div>
-            </main>
-
-
+                  console.log("ID used to fetch data");
+                console.log(id);
+                console.log("User data fetched");
+                console.log(user);
+                console.log("Trades data fetched");
+                console.log(trades);
+                console.log("Ratings data fetched");
+                console.log(ratings);
+            }
+            fetchData();
+        },[])
+     
+    return(
+        <div>
+            <p>{id}</p>
+            <p>{user}</p>
+            <p>{trades}</p>
+            <p>{ratings}</p>
+            <p>{totalRatings}</p>
+            
 
         </div>
-
-
-
-
-    );
+    )
+      
+ 
 }
 
 
